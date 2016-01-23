@@ -43,6 +43,8 @@ private:
 
     std::vector</*Obstacle*/QGraphicsPolygonItem *> obstacles_;
 
+    QGraphicsPathItem *path_;
+
     PathPlanner *path_planner_;
 };
 

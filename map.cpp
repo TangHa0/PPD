@@ -71,6 +71,29 @@ void Map::plan()
     std::vector<QPointF> path;
     if (path_planner_->plan(source, terminal, obstacles, this, path))
     {
+#if 0
+        path.push_back(QPointF(0, 0));
+        path.push_back(QPointF(100, 100));
+        path.push_back(QPointF(200, 300));
+#endif
+        if (path.size() == 0)
+        {
+            qCritical("Empty path");
+            return;
+        }
+
+        QPainterPath _path;
+        _path.moveTo(path[0]);
+        for (uint i = 1; i < path.size(); ++i)
+        {
+            _path.lineTo(path[i]);
+        }
+
+        if (path_)
+        {
+            this->removeItem(path_);
+        }
+        path_ = this->addPath(_path, QPen(QColor("green")));
     }
     else
         qCritical() << "Failed to plan";

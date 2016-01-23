@@ -19,7 +19,8 @@ bool GridPathPlanner::plan(const QPointF &source,
     gridize(source, terminal, polygons, source_new, terminal_new, grid_map, rows, cols);
 
     // Plan
-    if (plan(source_new, terminal_new, grid_map, rows, cols, scene, pathi))
+    bool ret = plan(source_new, terminal_new, grid_map, rows, cols, scene, pathi);
+    if (ret)
     {
         path.resize(pathi.size());
         for (uint i = 0; i < pathi.size(); ++i)
@@ -29,7 +30,7 @@ bool GridPathPlanner::plan(const QPointF &source,
         }
     }
 
-    return false;
+    return ret;
 }
 
 void GridPathPlanner::gridize(const QPointF &source_in,
