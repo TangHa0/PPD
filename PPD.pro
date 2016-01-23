@@ -14,18 +14,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         pathplanningdemonstrator.cpp \
-    obstacle.cpp \
     map.cpp \
-    vertex.cpp \
     pathplanner.cpp \
     gridpathplanner.cpp \
     polygonpathplanner.cpp \
     dijkstrapathplanner.cpp
 
 HEADERS  += pathplanningdemonstrator.h \
-    obstacle.h \
     map.h \
-    vertex.h \
     config.h \
     pathplanner.h \
     gridpathplanner.h \

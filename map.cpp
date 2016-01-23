@@ -69,7 +69,11 @@ void Map::plan()
     }
 
     std::vector<QPointF> path;
-    path_planner_->plan(source, terminal, obstacles, this, path);
+    if (path_planner_->plan(source, terminal, obstacles, this, path))
+    {
+    }
+    else
+        qCritical() << "Failed to plan";
 }
 
 void Map::setPathPlanner(PathPlanner *planner)
