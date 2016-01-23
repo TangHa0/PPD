@@ -6,7 +6,7 @@
 #include "config.h"
 
 Map::Map(QObject *parent) :
-    QGraphicsScene(parent), source_(NULL), terminal_(NULL)
+    QGraphicsScene(parent), source_(NULL), terminal_(NULL), path_(NULL)
 {
 //    this->installEventFilter(this);
     connect(this, SIGNAL(changed(const QList<QRectF> &) ), this, SLOT(changed( const QList<QRectF> &)));
@@ -57,8 +57,8 @@ void Map::plan()
 {
     qDebug() << "Start to plan";
 
-    QPointF source(source_->scenePos());
-    QPointF terminal(terminal_->scenePos());
+    QPointF source(source_->scenePos() + QPointF(VERTEX_RADIUS / 2.0,  VERTEX_RADIUS / 2.0));
+    QPointF terminal(terminal_->scenePos() + QPointF(VERTEX_RADIUS / 2.0,  VERTEX_RADIUS / 2.0));
 
     std::vector<QPolygonF> obstacles(obstacles_.size());
     for (uint i = 0; i < obstacles_.size(); ++i)
@@ -89,10 +89,13 @@ void Map::plan()
             _path.lineTo(path[i]);
         }
 
-        if (path_)
-        {
-            this->removeItem(path_);
-        }
+//        if (path_)
+//        {
+//            this->removeItem(path_);
+//            delete path_;
+//        }
+        clear();
+
         path_ = this->addPath(_path, QPen(QColor("green")));
     }
     else
@@ -107,6 +110,12 @@ void Map::setPathPlanner(PathPlanner *planner)
 void Map::clear()
 {
     qDebug() << "Clear the map";
+    if (path_ && path_->scene() == this)
+    {
+//        this->removeItem(path_);
+//        delete path_;
+    }
+//    delete path_;
 }
 
 void Map::changed(const QList<QRectF> &)

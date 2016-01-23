@@ -1,6 +1,7 @@
 #include "gridpathplanner.h"
 
 #include <limits>
+#include <cmath>
 
 GridPathPlanner::GridPathPlanner()
 {
@@ -25,8 +26,8 @@ bool GridPathPlanner::plan(const QPointF &source,
         path.resize(pathi.size());
         for (uint i = 0; i < pathi.size(); ++i)
         {
-            path[i].rx() = pathi[i].rx() * GRID_SIZE + min_x_;
-            path[i].ry() = pathi[i].ry() * GRID_SIZE + min_y_;
+            path[i].rx() = (pathi[i].rx() + 0.5) * GRID_SIZE + min_x_;
+            path[i].ry() = (pathi[i].ry() + 0.5) * GRID_SIZE + min_y_;
         }
     }
 
@@ -71,8 +72,34 @@ void GridPathPlanner::gridize(const QPointF &source_in,
 
     qDebug("min_x = %lf, min_y = %lf, max_x = %lf, max_y = %lf", min_x_, min_y_, max_x_, max_y_);
 
+    min_x_ -= GRID_PADDING;
+    min_y_ -= GRID_PADDING;
+    max_x_ += GRID_PADDING;
+    max_y_ += GRID_PADDING;
+
     cols = (max_x_ - min_x_) / GRID_SIZE + 0.5;
     rows = (max_y_ - min_y_) / GRID_SIZE + 0.5;
+
+    std::vector<QPolygonF> expanded_obstacles(obstacles.size());
+    for (uint i = 0; i < obstacles.size(); ++i)
+    {
+        QPolygonF obstacle = obstacles[i];
+
+        QPointF center(0.0, 0.0);
+        for (int j = 0; j < obstacle.size(); ++j)
+            center += obstacle[j];
+        center /= obstacle.size();
+
+        QPolygonF expanded_obstacle;
+        for (int j = 0; j < obstacle.size(); ++j)
+        {
+            QPointF v =  obstacle[j] - center;
+            v /= std::sqrt(v.x() * v.x() + v.y() * v.y());
+            expanded_obstacle.push_back(obstacle[j] + v * GRID_SIZE);
+        }
+
+        expanded_obstacles[i] = expanded_obstacle;
+    }
 
     grid_map.resize(rows, std::vector<bool>(cols));
     for (int i = 0; i < rows; ++i)
@@ -82,7 +109,7 @@ void GridPathPlanner::gridize(const QPointF &source_in,
             QPointF p(j * GRID_SIZE + min_x_, i * GRID_SIZE + min_y_);
             for (uint k = 0; k < obstacles.size(); ++k)
             {
-                if (pointInPolygon(p, obstacles[k]))
+                if (pointInPolygon(p, expanded_obstacles[k]))
                 {
                     grid_map[j][i] = true;
                     break;

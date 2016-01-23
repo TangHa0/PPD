@@ -7,6 +7,7 @@
 #include <QFile>
 
 #include "dijkstrapathplanner.h"
+#include "astarpathplanner.h"
 
 PathPlanningDemonstrator::PathPlanningDemonstrator(QWidget *parent) :
     QMainWindow(parent),
@@ -18,7 +19,8 @@ PathPlanningDemonstrator::PathPlanningDemonstrator(QWidget *parent) :
     ui->graphics_view->setAcceptDrops(true);
     ui->graphics_view->setScene(map_);
 
-    map_->setPathPlanner(new DijkstraPathPlanner);
+//    map_->setPathPlanner(new DijkstraPathPlanner);
+    map_->setPathPlanner(new AStarPathPlanner);
 }
 
 PathPlanningDemonstrator::~PathPlanningDemonstrator()

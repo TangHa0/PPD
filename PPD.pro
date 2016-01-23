@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     pathplanner.cpp \
     gridpathplanner.cpp \
     polygonpathplanner.cpp \
-    dijkstrapathplanner.cpp
+    dijkstrapathplanner.cpp \
+    astarpathplanner.cpp
 
 HEADERS  += pathplanningdemonstrator.h \
     map.h \
@@ -26,6 +27,7 @@ HEADERS  += pathplanningdemonstrator.h \
     pathplanner.h \
     gridpathplanner.h \
     polygonpathplanner.h \
-    dijkstrapathplanner.h
+    dijkstrapathplanner.h \
+    astarpathplanner.h
 
 FORMS    += pathplanningdemonstrator.ui
