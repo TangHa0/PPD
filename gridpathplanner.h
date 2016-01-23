@@ -10,7 +10,7 @@ protected:
 
     typedef std::vector<std::vector<bool> > GridMap;
 
-    typedef std::vector<QPointF> PathI;
+    typedef std::vector<QPoint> PathI;
 
 public:
     GridPathPlanner();
