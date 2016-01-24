@@ -7,7 +7,7 @@ PolygonPathPlanner::PolygonPathPlanner()
 }
 
 
-void PolygonPathPlanner::dijkstra(const std::vector<std::vector<double> > &weight_matrix, int source, int terminal, std::vector<int> &path)
+bool PolygonPathPlanner::dijkstra(const std::vector<std::vector<double> > &weight_matrix, int source, int terminal, std::vector<int> &path)
 {
     int N = weight_matrix.size();
 
@@ -28,6 +28,9 @@ void PolygonPathPlanner::dijkstra(const std::vector<std::vector<double> > &weigh
                 min_index = i;
             }
         }
+
+        if (min_index < 0)
+            return false;
 
         visited[min_index] = true;
 
@@ -58,4 +61,6 @@ void PolygonPathPlanner::dijkstra(const std::vector<std::vector<double> > &weigh
     path.resize(n);
     for (int i = 0; i < n; ++i)
         path[n - 1 - i] = tmp_path[i];
+
+    return true;
 }

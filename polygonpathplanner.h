@@ -9,7 +9,7 @@ public:
     PolygonPathPlanner();
 
 protected:
-    void dijkstra(const std::vector<std::vector<double> > &weight_matrix, int source, int terminal, std::vector<int> &path);
+    bool dijkstra(const std::vector<std::vector<double> > &weight_matrix, int source, int terminal, std::vector<int> &path);
 };
 
 #endif // POLYGONPATHPLANNER_H

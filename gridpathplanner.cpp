@@ -10,7 +10,7 @@ GridPathPlanner::GridPathPlanner()
 bool GridPathPlanner::plan(const QPointF &source,
                            const QPointF &terminal,
                            const std::vector<QPolygonF> &polygons,
-                           const QGraphicsScene *scene,
+                           QGraphicsScene *scene,
                            Path &path)
 {
     GridMap grid_map;

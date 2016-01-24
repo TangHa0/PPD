@@ -18,7 +18,7 @@ public:
     bool plan(const QPointF &source,
          const QPointF &terminal,
          const std::vector<QPolygonF> &polygons,
-         const QGraphicsScene *scene,
+         QGraphicsScene *scene,
          Path &path);
 
 protected:
@@ -27,7 +27,7 @@ protected:
                       const GridMap &grid_map,
                       const int rows,
                       const int cols,
-                      const QGraphicsScene *scene,
+                      QGraphicsScene *scene,
                       PathI &path) = 0;
 private:
 

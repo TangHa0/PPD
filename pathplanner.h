@@ -17,7 +17,7 @@ public:
     virtual bool plan(const QPointF &source,
               const QPointF &terminal,
               const std::vector<QPolygonF> &polygons,
-              const QGraphicsScene *scene,
+              QGraphicsScene *scene,
               Path &path) = 0;
 
     virtual QString getName() const = 0;

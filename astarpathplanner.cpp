@@ -39,13 +39,12 @@ QString AStarPathPlanner::getName() const
     return "A*";
 }
 
-bool AStarPathPlanner::plan(
-        const QPoint &source,
+bool AStarPathPlanner::plan(const QPoint &source,
         const QPoint &terminal,
         const GridMap &grid_map,
         const int rows,
         const int cols,
-        const QGraphicsScene *scene,
+        QGraphicsScene *scene,
         PathI &path)
 {
 

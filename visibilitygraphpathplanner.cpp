@@ -8,7 +8,7 @@ VisibilityGraphPathPlanner::VisibilityGraphPathPlanner()
 {
 }
 
-bool VisibilityGraphPathPlanner::plan(const QPointF &source, const QPointF &terminal, const std::vector<QPolygonF> &polygons, const QGraphicsScene *scene, Path &path)
+bool VisibilityGraphPathPlanner::plan(const QPointF &source, const QPointF &terminal, const std::vector<QPolygonF> &polygons, QGraphicsScene *scene, Path &path)
 {
     std::vector<QLineF> polygon_lines;
     int N = 2;
@@ -71,7 +71,8 @@ bool VisibilityGraphPathPlanner::plan(const QPointF &source, const QPointF &term
     }
 
     std::vector<int> pathi;
-    dijkstra(weight, 0, 1, pathi);
+    if (!dijkstra(weight, 0, 1, pathi))
+        return false;
 
     path.resize(pathi.size());
     for (uint i = 0; i < pathi.size(); ++i)

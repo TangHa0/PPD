@@ -9,7 +9,7 @@
 #define GRID_PADDING 100
 
 // Voronoi
-#define VORONOI_PADDING 100
+#define VORONOI_PADDING 40
 
 //#define DEBUG
 

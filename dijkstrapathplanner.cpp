@@ -16,7 +16,7 @@ QString DijkstraPathPlanner::getName() const
 bool DijkstraPathPlanner::plan(const QPoint &source,
         const QPoint &terminal,
         const GridMap &grid_map, const int rows, const int cols,
-        const QGraphicsScene *scene,
+        QGraphicsScene *scene,
         PathI &path)
 {
     // 1 2 3

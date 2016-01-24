@@ -17,7 +17,7 @@ protected:
             const GridMap &grid_map,
             const int rows,
             const int cols,
-            const QGraphicsScene *scene,
+            QGraphicsScene *scene,
             PathI &path);
 };
 

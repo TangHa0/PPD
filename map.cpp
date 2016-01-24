@@ -75,8 +75,8 @@ void Map::plan()
 #endif
 
         QString info;
-        info = "Takes " + QString::number(takes / 1000.0) + " second(s)";
-        QMessageBox::information(dynamic_cast<QWidget *>(this->parent()), QString("Path Planner done"),info, QMessageBox::Ok);
+        info = "Done. Takes " + QString::number(takes / 1000.0) + " second(s)";
+        QMessageBox::information(dynamic_cast<QWidget *>(this->parent()), QString("Path Planner"),info, QMessageBox::Ok);
 
         if (path.size() == 0)
         {
@@ -96,6 +96,7 @@ void Map::plan()
     }
     else
     {
+        QMessageBox::warning(dynamic_cast<QWidget *>(this->parent()), QString("Path Planner"), "Failed", QMessageBox::Ok);
         qCritical() << "Failed to plan";
     }
 }

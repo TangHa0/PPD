@@ -8,7 +8,7 @@ class VoronoiPathPlanner : public PolygonPathPlanner
 public:
     VoronoiPathPlanner();
 
-    bool plan(const QPointF &source, const QPointF &terminal, const std::vector<QPolygonF> &polygons, const QGraphicsScene *scene, Path &path);
+    bool plan(const QPointF &source, const QPointF &terminal, const std::vector<QPolygonF> &polygons, QGraphicsScene *scene, Path &path);
 
     QString getName() const;
 };

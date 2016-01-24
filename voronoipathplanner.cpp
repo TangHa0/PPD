@@ -101,7 +101,7 @@ VoronoiPathPlanner::VoronoiPathPlanner()
     debug = 0;
 }
 
-bool VoronoiPathPlanner::plan(const QPointF &source, const QPointF &terminal, const std::vector<QPolygonF> &polygons, const QGraphicsScene *scene, Path &path)
+bool VoronoiPathPlanner::plan(const QPointF &source, const QPointF &terminal, const std::vector<QPolygonF> &polygons, QGraphicsScene *scene, Path &path)
 {
     freeinit(&sfl, sizeof(Site)) ;
 
@@ -170,6 +170,9 @@ bool VoronoiPathPlanner::plan(const QPointF &source, const QPointF &terminal, co
             }
         }
 
+        if (p.x() < x_min - VORONOI_PADDING || p.x() > x_max + VORONOI_PADDING || p.y() < y_min - VORONOI_PADDING || p.y() > y_max + VORONOI_PADDING)
+            in_polygon = true;
+
         if (!in_polygon)
         {
             vronoi_indecies[i] = voronoi_points.size();
@@ -192,6 +195,11 @@ bool VoronoiPathPlanner::plan(const QPointF &source, const QPointF &terminal, co
 
         }
     }
+
+#if 0
+    for (int i = 0; i < voronoi_points.size(); ++i)
+        scene->addEllipse(voronoi_points[i].x(), voronoi_points[i].y(), 5, 5);
+#endif
 
     std::vector<QLineF> polygon_lines;
     for (uint pg = 0; pg < polygons.size(); ++pg)
@@ -246,16 +254,18 @@ bool VoronoiPathPlanner::plan(const QPointF &source, const QPointF &terminal, co
             if (!intersect)
                 weight_matrix[N-1][i] = weight_matrix[i][N-1] = ll.length();
         }
-
     }
 
     std::vector<int> pathi;
-    dijkstra(weight_matrix, N - 2, N - 1, pathi);
+    bool success = dijkstra(weight_matrix, N - 2, N - 1, pathi);
 
-    path.resize(pathi.size());
-    for (uint i = 0; i < pathi.size(); ++i)
+    if (success)
     {
-        path[i] = voronoi_points[pathi[i]];
+        path.resize(pathi.size());
+        for (uint i = 0; i < pathi.size(); ++i)
+        {
+            path[i] = voronoi_points[pathi[i]];
+        }
     }
 
     delete[] vertexs_x;
@@ -263,7 +273,7 @@ bool VoronoiPathPlanner::plan(const QPointF &source, const QPointF &terminal, co
     delete[] edges_s;
     delete[] edges_t;
 
-    return true;
+    return success;
 }
 
 QString VoronoiPathPlanner::getName() const
