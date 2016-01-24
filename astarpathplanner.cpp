@@ -118,10 +118,3 @@ bool AStarPathPlanner::plan(
 
     return true;
 }
-
-double AStarPathPlanner::distance(const QPoint &p1, const QPoint &p2)
-{
-    double dx = p1.x() - p2.x();
-    double dy = p1.y() - p2.y();
-    return std::sqrt(dx * dx + dy * dy);
-}

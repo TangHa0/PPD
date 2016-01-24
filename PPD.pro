@@ -12,7 +12,7 @@ TARGET = PPD
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
+SOURCES +=\
         pathplanningdemonstrator.cpp \
     map.cpp \
     pathplanner.cpp \
@@ -20,7 +20,15 @@ SOURCES += main.cpp\
     polygonpathplanner.cpp \
     dijkstrapathplanner.cpp \
     astarpathplanner.cpp \
-    visibilitygraphpathplanner.cpp
+    visibilitygraphpathplanner.cpp \
+    voronoipathplanner.cpp \
+    voronoi/heap.c \
+    voronoi/voronoi.c \
+    voronoi/output.c \
+    voronoi/geometry.c \
+    voronoi/edgelist.c \
+    main.cpp \
+    voronoi/memory.c
 
 HEADERS  += pathplanningdemonstrator.h \
     map.h \
@@ -30,6 +38,7 @@ HEADERS  += pathplanningdemonstrator.h \
     polygonpathplanner.h \
     dijkstrapathplanner.h \
     astarpathplanner.h \
-    visibilitygraphpathplanner.h
+    visibilitygraphpathplanner.h \
+    voronoipathplanner.h
 
 FORMS    += pathplanningdemonstrator.ui

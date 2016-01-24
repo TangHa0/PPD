@@ -40,7 +40,7 @@ private:
                  int &rows,
                  int &cols);
 
-    bool pointInPolygon(const QPointF &point, const QPolygonF &polygon);
+//    bool pointInPolygon(const QPointF &point, const QPolygonF &polygon);
 
 private:
     double min_x_, min_y_, max_x_, max_y_;

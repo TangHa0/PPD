@@ -122,24 +122,3 @@ void GridPathPlanner::gridize(const QPointF &source_in,
     source_out = QPoint  ((source_in.x()   - min_x_) / GRID_SIZE + 0.5, (source_in.y()   - min_y_) / GRID_SIZE + 0.5);
     terminal_out = QPoint((terminal_in.x() - min_x_) / GRID_SIZE + 0.5, (terminal_in.y() - min_y_) / GRID_SIZE + 0.5);
 }
-
-bool GridPathPlanner::pointInPolygon(const QPointF &point, const QPolygonF &polygon)
-{
-    int polyCorners = polygon.size();
-    int i, j = polyCorners - 1;
-    bool oddNodes = false;
-    double x = point.x(), y = point.y();
-
-    for (i=0; i < polyCorners; i++)
-    {
-        if ( ((polygon[i].y() < y && polygon[j].y() >= y) || (polygon[j].y() < y && polygon[i].y() >= y))
-             && (polygon[i].x() <= x || polygon[j].x()<=x))
-        {
-            oddNodes ^= (polygon[i].x()+(y-polygon[i].y())/(polygon[j].y()-polygon[i].y())*(polygon[j].x()-polygon[i].x())<x);
-        }
-
-        j = i;
-    }
-
-    return oddNodes;
-}

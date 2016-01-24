@@ -9,6 +9,7 @@
 #include "dijkstrapathplanner.h"
 #include "astarpathplanner.h"
 #include "visibilitygraphpathplanner.h"
+#include "voronoipathplanner.h"
 
 PathPlanningDemonstrator::PathPlanningDemonstrator(QWidget *parent) :
     QMainWindow(parent),
@@ -23,6 +24,7 @@ PathPlanningDemonstrator::PathPlanningDemonstrator(QWidget *parent) :
     this->addPlanner(new DijkstraPathPlanner);
     this->addPlanner(new AStarPathPlanner);
     this->addPlanner(new VisibilityGraphPathPlanner);
+    this->addPlanner(new VoronoiPathPlanner);
 }
 
 PathPlanningDemonstrator::~PathPlanningDemonstrator()

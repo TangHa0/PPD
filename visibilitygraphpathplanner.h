@@ -13,7 +13,7 @@ public:
     QString getName() const;
 
 private:
-    void dijkstra(const std::vector<std::vector<double> > &weight_matrix, int source, int terminal, std::vector<int> &path);
+//    void dijkstra(const std::vector<std::vector<double> > &weight_matrix, int source, int terminal, std::vector<int> &path);
 };
 
 #endif // VISIBILITYGRAPHPATHPLANNER_H
