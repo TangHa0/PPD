@@ -8,6 +8,8 @@ class AStarPathPlanner : public GridPathPlanner
 public:
     AStarPathPlanner();
 
+    QString getName() const;
+
 protected:
     bool plan(
             const QPoint &source,

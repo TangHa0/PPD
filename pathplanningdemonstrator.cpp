@@ -19,13 +19,19 @@ PathPlanningDemonstrator::PathPlanningDemonstrator(QWidget *parent) :
     ui->graphics_view->setAcceptDrops(true);
     ui->graphics_view->setScene(map_);
 
-//    map_->setPathPlanner(new DijkstraPathPlanner);
-    map_->setPathPlanner(new AStarPathPlanner);
+    this->addPlanner(new DijkstraPathPlanner);
+    this->addPlanner(new AStarPathPlanner);
 }
 
 PathPlanningDemonstrator::~PathPlanningDemonstrator()
 {
     delete ui;
+}
+
+void PathPlanningDemonstrator::addPlanner(PathPlanner *planner)
+{
+    planners_.push_back(planner);
+    ui->planner_box->addItem(planner->getName());
 }
 
 void PathPlanningDemonstrator::on_actionLoad_triggered()
@@ -67,7 +73,14 @@ void PathPlanningDemonstrator::on_actionLoad_triggered()
     }
 }
 
-void PathPlanningDemonstrator::on_pushButton_clicked()
+void PathPlanningDemonstrator::on_plan_utton_clicked()
 {
     map_->plan();
+}
+
+void PathPlanningDemonstrator::on_planner_box_currentIndexChanged(int index)
+{
+    Q_ASSERT(index >= 0 && index < planners_.size());
+
+    map_->setPathPlanner(planners_[index]);
 }

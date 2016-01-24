@@ -2,13 +2,14 @@
 
 #include <QGraphicsSceneDragDropEvent>
 #include <QDebug>
+#include <QTime>
+#include <QMessageBox>
 
 #include "config.h"
 
 Map::Map(QObject *parent) :
     QGraphicsScene(parent), source_(NULL), terminal_(NULL), path_(NULL)
 {
-//    this->installEventFilter(this);
     connect(this, SIGNAL(changed(const QList<QRectF> &) ), this, SLOT(changed( const QList<QRectF> &)));
 }
 
@@ -20,8 +21,6 @@ void Map::addSource(QPointF _source)
         return;
     }
 
-//    source_ = new Vertex(_source.x(), _source.y(), VERTEX_RADIUS, VERTEX_RADIUS, QColor("red"));
-//    this->addItem(source_);
     source_ = this->addEllipse(0, 0, VERTEX_RADIUS, VERTEX_RADIUS, QPen(), QBrush(QColor("red"), Qt::SolidPattern));
     source_->setPos(_source.x(), _source.y());
     source_->setFlags(QGraphicsPolygonItem::ItemIsMovable);
@@ -35,8 +34,6 @@ void Map::addTerminal(QPointF _terminal)
         return;
     }
 
-//    terminal_ = new Vertex(_terminal.x(), _terminal.y(), VERTEX_RADIUS, VERTEX_RADIUS, QColor("blue"));
-//    this->addItem(terminal_);
     terminal_ = this->addEllipse(0, 0, VERTEX_RADIUS, VERTEX_RADIUS, QPen(), QBrush(QColor("blue"), Qt::SolidPattern));
     terminal_->setPos(_terminal.x(), _terminal.y());
     terminal_->setFlags(QGraphicsPolygonItem::ItemIsMovable);
@@ -44,12 +41,8 @@ void Map::addTerminal(QPointF _terminal)
 
 void Map::addOstacle(QPolygonF _polygon)
 {
-//    Obstacle *obstacle = new Obstacle(_polygon);
-//    this->addItem(obstacle);
     QGraphicsPolygonItem * obstacle = this->addPolygon(_polygon, QPen(), QBrush(Qt::SolidPattern));
     obstacle->setFlags(QGraphicsPolygonItem::ItemIsMovable);
-//    this->installEventFilter(obstacle);
-//    obstacle->installSceneEventFilter(this);
     obstacles_.push_back(obstacle);
 }
 
@@ -69,13 +62,22 @@ void Map::plan()
     }
 
     std::vector<QPointF> path;
-    if (path_planner_->plan(source, terminal, obstacles, this, path))
+    QTime timer;
+    timer.start();
+    bool ret = path_planner_->plan(source, terminal, obstacles, this, path);
+    int takes = timer.elapsed();
+    if (ret)
     {
 #if 0
         path.push_back(QPointF(0, 0));
         path.push_back(QPointF(100, 100));
         path.push_back(QPointF(200, 300));
 #endif
+
+        QString info;
+        info = "Takes " + QString::number(takes / 1000.0) + " second(s)";
+        QMessageBox::information(dynamic_cast<QWidget *>(this->parent()), QString("Path Planner done"),info, QMessageBox::Ok);
+
         if (path.size() == 0)
         {
             qCritical("Empty path");
@@ -89,17 +91,13 @@ void Map::plan()
             _path.lineTo(path[i]);
         }
 
-//        if (path_)
-//        {
-//            this->removeItem(path_);
-//            delete path_;
-//        }
         clear();
-
         path_ = this->addPath(_path, QPen(QColor("green")));
     }
     else
+    {
         qCritical() << "Failed to plan";
+    }
 }
 
 void Map::setPathPlanner(PathPlanner *planner)
@@ -112,48 +110,11 @@ void Map::clear()
     qDebug() << "Clear the map";
     if (path_ && path_->scene() == this)
     {
-//        this->removeItem(path_);
-//        delete path_;
+        this->removeItem(path_);
     }
-//    delete path_;
 }
 
 void Map::changed(const QList<QRectF> &)
 {
     qDebug() << "scene changed";
-    clear();
 }
-
-//bool Map::eventFilter(QObject *watched, QEvent *event)
-//{
-//    if (event->type() == QEvent::MouseMove)
-//    {
-//        bool object_moved = false;
-//        if (dynamic_cast<QGraphicsEllipseItem *>(watched) == source_)
-//        {
-//            object_moved = true;
-//        }
-//        else if (dynamic_cast<QGraphicsEllipseItem *>(watched) == terminal_)
-//        {
-//            object_moved = true;
-//        }
-//        else
-//        {
-//            for (uint i = 0; i < obstacles_.size(); ++i)
-//            {
-//                if (dynamic_cast<QGraphicsPolygonItem *>(watched) == obstacles_[i])
-//                {
-//                    object_moved = true;
-//                    break;
-//                }
-//            }
-//        }
-
-//        if (object_moved)
-//        {
-//            qDebug() << "Object moved";
-//        }
-//    }
-
-//    return QGraphicsScene::eventFilter(watched, event);
-//}

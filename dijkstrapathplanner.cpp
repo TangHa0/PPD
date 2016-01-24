@@ -7,6 +7,11 @@ DijkstraPathPlanner::DijkstraPathPlanner()
 {
 }
 
+QString DijkstraPathPlanner::getName() const
+{
+    return "Dijkstra";
+}
+
 bool DijkstraPathPlanner::plan(const QPoint &source,
         const QPoint &terminal,
         const GridMap &grid_map, const int rows, const int cols,
@@ -14,7 +19,7 @@ bool DijkstraPathPlanner::plan(const QPoint &source,
         PathI &path)
 {
 
-#if 1
+#if DEBUG
     qDebug() << source;
     qDebug() << terminal;
 

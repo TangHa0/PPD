@@ -8,6 +8,8 @@ class DijkstraPathPlanner : public GridPathPlanner
 public:
     DijkstraPathPlanner();
 
+    QString getName() const;
+
 protected:
     bool plan(const QPoint &source,
               const QPoint &terminal,

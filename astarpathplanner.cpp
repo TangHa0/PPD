@@ -34,6 +34,11 @@ public:
 AStarPathPlanner::AStarPathPlanner()
 {}
 
+QString AStarPathPlanner::getName() const
+{
+    return "A*";
+}
+
 bool AStarPathPlanner::plan(
         const QPoint &source,
         const QPoint &terminal,
@@ -44,7 +49,7 @@ bool AStarPathPlanner::plan(
         PathI &path)
 {
 
-#if 1
+#if DEBUG
     qDebug() << rows << " row(s), " << cols << " col(s)";
     qDebug() << source;
     qDebug() << terminal;
@@ -100,7 +105,7 @@ bool AStarPathPlanner::plan(
                     x_new >= 0 && y_new >= 0 &&
                     x_new < cols && y_new < rows &&
                     !visited[y_new][x_new] &&
-                    !grid_map[x_new][y_new])
+                    !grid_map[y_new][x_new])
             {
                 CostNode n_new(x_new, y_new, n_best.g + gs[i], distance(QPoint(x_new, y_new), terminal));
                 n_new.path = n_best.path;

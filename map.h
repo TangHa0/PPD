@@ -8,8 +8,6 @@
 #include <QPolygon>
 
 #include "pathplanner.h"
-//#include "vertex.h"
-//#include "obstacle.h"
 
 class Map : public QGraphicsScene
 {
@@ -27,9 +25,6 @@ public:
 
     void setPathPlanner(PathPlanner *planner);
 
-protected:
-//    bool eventFilter(QObject *watched, QEvent *event);
-
 private:
     void clear();
 
@@ -39,9 +34,9 @@ private slots:
 
 private:
 
-    /*Vertex*/QGraphicsEllipseItem *source_, *terminal_;
+    QGraphicsEllipseItem *source_, *terminal_;
 
-    std::vector</*Obstacle*/QGraphicsPolygonItem *> obstacles_;
+    std::vector<QGraphicsPolygonItem *> obstacles_;
 
     QGraphicsPathItem *path_;
 

@@ -111,7 +111,7 @@ void GridPathPlanner::gridize(const QPointF &source_in,
             {
                 if (pointInPolygon(p, expanded_obstacles[k]))
                 {
-                    grid_map[j][i] = true;
+                    grid_map[i][j] = true;
                     break;
                 }
             }
@@ -119,7 +119,7 @@ void GridPathPlanner::gridize(const QPointF &source_in,
         }
     }
 
-    source_out = QPoint((source_in.x() - min_x_) / GRID_SIZE + 0.5, (source_in.y() - min_y_) / GRID_SIZE + 0.5);
+    source_out = QPoint  ((source_in.x()   - min_x_) / GRID_SIZE + 0.5, (source_in.y()   - min_y_) / GRID_SIZE + 0.5);
     terminal_out = QPoint((terminal_in.x() - min_x_) / GRID_SIZE + 0.5, (terminal_in.y() - min_y_) / GRID_SIZE + 0.5);
 }
 

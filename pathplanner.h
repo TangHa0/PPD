@@ -19,6 +19,8 @@ public:
               const std::vector<QPolygonF> &polygons,
               const QGraphicsScene *scene,
               Path &path) = 0;
+
+    virtual QString getName() const = 0;
 };
 
 #endif // PATHPLANNER_H
