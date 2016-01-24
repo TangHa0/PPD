@@ -92,7 +92,7 @@ void Map::plan()
         }
 
         clear();
-        path_ = this->addPath(_path, QPen(QColor("green")));
+        path_ = this->addPath(_path, QPen(QBrush(QColor("green")), 3));
     }
     else
     {

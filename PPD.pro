@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     gridpathplanner.cpp \
     polygonpathplanner.cpp \
     dijkstrapathplanner.cpp \
-    astarpathplanner.cpp
+    astarpathplanner.cpp \
+    visibilitygraphpathplanner.cpp
 
 HEADERS  += pathplanningdemonstrator.h \
     map.h \
@@ -28,6 +29,7 @@ HEADERS  += pathplanningdemonstrator.h \
     gridpathplanner.h \
     polygonpathplanner.h \
     dijkstrapathplanner.h \
-    astarpathplanner.h
+    astarpathplanner.h \
+    visibilitygraphpathplanner.h
 
 FORMS    += pathplanningdemonstrator.ui
