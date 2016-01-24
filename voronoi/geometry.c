@@ -97,8 +97,8 @@ intersect(Halfedge * el1, Halfedge * el2)
         e = e2 ;
         }
     right_of_site = (xint >= e->reg[1]->coord.x) ;
-    if ((right_of_site && (el->ELpm == le)) ||
-       (!right_of_site && (el->ELpm == re)))
+    if ((right_of_site && (el->ELpm == LEFT_EDGE)) ||
+       (!right_of_site && (el->ELpm == RIGHT_EDGE)))
         {
         return ((Site *)NULL) ;
         }
@@ -122,11 +122,11 @@ right_of(Halfedge * el, Point * p)
     e = el->ELedge ;
     topsite = e->reg[1] ;
     right_of_site = (p->x > topsite->coord.x) ;
-    if (right_of_site && (el->ELpm == le))
+    if (right_of_site && (el->ELpm == LEFT_EDGE))
         {
         return (1) ;
         }
-    if(!right_of_site && (el->ELpm == re))
+    if(!right_of_site && (el->ELpm == RIGHT_EDGE))
         {
         return (0) ;
         }
@@ -173,7 +173,7 @@ right_of(Halfedge * el, Point * p)
         t3 = yl - topsite->coord.y ;
         above = ((t1*t1) > ((t2 * t2) + (t3 * t3))) ;
         }
-    return (el->ELpm == le ? above : !above) ;
+    return (el->ELpm == LEFT_EDGE ? above : !above) ;
     }
 
 void
@@ -181,13 +181,13 @@ endpoint(Edge * e, int lr, Site * s)
     {
     e->ep[lr] = s ;
     ref(s) ;
-    if (e->ep[re-lr] == (Site *)NULL)
+    if (e->ep[RIGHT_EDGE-lr] == (Site *)NULL)
         {
         return ;
         }
     out_ep(e) ;
-    deref(e->reg[le]) ;
-    deref(e->reg[re]) ;
+    deref(e->reg[LEFT_EDGE]) ;
+    deref(e->reg[RIGHT_EDGE]) ;
     makefree((Freenode *)e, (Freelist *) &efl) ;
     }
 

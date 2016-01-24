@@ -18,10 +18,10 @@ extern Halfedge * ELleftend, * ELrightend ;
 
 #define ADD_EDGE(e, edges) \
 {\
-    if (e->ep[le] != (Site *)NULL && e->ep[re] != (Site *)NULL)\
+    if (e->ep[LEFT_EDGE] != (Site *)NULL && e->ep[RIGHT_EDGE] != (Site *)NULL)\
     {\
-        edges_s[*edges] = e->ep[le]->sitenbr;\
-        edges_t[*edges] = e->ep[re]->sitenbr;\
+        edges_s[*edges] = e->ep[LEFT_EDGE]->sitenbr;\
+        edges_t[*edges] = e->ep[RIGHT_EDGE]->sitenbr;\
         (*edges)++;\
     }\
 }
@@ -60,7 +60,7 @@ smallest */
         rbnd = ELright(lbnd) ;
         bot = rightreg(lbnd) ;
         e = bisect(bot, newsite) ;
-        bisector = HEcreate(e, le) ;
+        bisector = HEcreate(e, LEFT_EDGE) ;
         ELinsert(lbnd, bisector) ;
         p = intersect(lbnd, bisector) ;
         if (p != (Site *)NULL)
@@ -69,7 +69,7 @@ smallest */
             PQinsert(lbnd, p, dist(p,newsite)) ;
             }
         lbnd = bisector ;
-        bisector = HEcreate(e, re) ;
+        bisector = HEcreate(e, RIGHT_EDGE) ;
         ELinsert(lbnd, bisector) ;
         p = intersect(bisector, rbnd) ;
         if (p != (Site *)NULL)
@@ -99,18 +99,18 @@ smallest */
             ELdelete(lbnd) ;
             PQdelete(rbnd) ;
             ELdelete(rbnd) ;
-            pm = le ;
+            pm = LEFT_EDGE ;
             if (bot->coord.y > top->coord.y)
                 {
                 temp = bot ;
                 bot = top ;
                 top = temp ;
-                pm = re ;
+                pm = RIGHT_EDGE ;
                 }
             e = bisect(bot, top) ;
             bisector = HEcreate(e, pm) ;
             ELinsert(llbnd, bisector) ;
-            endpoint(e, re-pm, v) ;
+            endpoint(e, RIGHT_EDGE-pm, v) ;
             ADD_EDGE(e, edges);
             deref(v) ;
             p = intersect(llbnd, bisector) ;

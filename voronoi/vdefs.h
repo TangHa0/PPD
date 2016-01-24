@@ -7,6 +7,9 @@
 
 #define DELETED -2
 
+#define LEFT_EDGE 0
+#define RIGHT_EDGE 1
+
 typedef struct tagFreenode
     {
     struct tagFreenode * nextfree;
@@ -43,8 +46,6 @@ typedef struct tagEdge
     int edgenbr ;
     } Edge ;
 
-#define le 0
-#define re 1
 
 typedef struct tagHalfedge
     {

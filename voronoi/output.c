@@ -52,7 +52,7 @@ out_bisector(Edge * e)
     if (debug)
         {
         printf("line(%d) %gx+%gy=%g, bisecting %d %d\n", e->edgenbr,
-        e->a, e->b, e->c, e->reg[le]->sitenbr, e->reg[re]->sitenbr) ;
+        e->a, e->b, e->c, e->reg[LEFT_EDGE]->sitenbr, e->reg[RIGHT_EDGE]->sitenbr) ;
         }
     }
 
@@ -66,8 +66,8 @@ out_ep(Edge * e)
     if (!triangulate && !plot)
         {
         printf("e %d", e->edgenbr);
-        printf(" %d ", e->ep[le] != (Site *)NULL ? e->ep[le]->sitenbr : -1) ;
-        printf("%d\n", e->ep[re] != (Site *)NULL ? e->ep[re]->sitenbr : -1) ;
+        printf(" %d ", e->ep[LEFT_EDGE] != (Site *)NULL ? e->ep[LEFT_EDGE]->sitenbr : -1) ;
+        printf("%d\n", e->ep[RIGHT_EDGE] != (Site *)NULL ? e->ep[RIGHT_EDGE]->sitenbr : -1) ;
         }
     }
 

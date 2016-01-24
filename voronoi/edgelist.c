@@ -175,8 +175,8 @@ leftreg(Halfedge * he)
         {
         return(bottomsite) ;
         }
-    return (he->ELpm == le ? he->ELedge->reg[le] :
-        he->ELedge->reg[re]) ;
+    return (he->ELpm == LEFT_EDGE ? he->ELedge->reg[LEFT_EDGE] :
+        he->ELedge->reg[RIGHT_EDGE]) ;
     }
 
 Site *
@@ -186,8 +186,8 @@ rightreg(Halfedge * he)
         {
         return(bottomsite) ;
         }
-    return (he->ELpm == le ? he->ELedge->reg[re] :
-        he->ELedge->reg[le]) ;
+    return (he->ELpm == LEFT_EDGE ? he->ELedge->reg[RIGHT_EDGE] :
+        he->ELedge->reg[LEFT_EDGE]) ;
     }
 
 #ifdef __cplusplus
