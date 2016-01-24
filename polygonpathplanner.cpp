@@ -2,6 +2,8 @@
 
 #include <limits>
 
+#include <QDebug>
+
 PolygonPathPlanner::PolygonPathPlanner()
 {
 }
@@ -31,6 +33,7 @@ bool PolygonPathPlanner::dijkstra(const std::vector<std::vector<double> > &weigh
 
         if (min_index < 0)
             return false;
+        qDebug() << min_dist;
 
         visited[min_index] = true;
 
@@ -56,6 +59,8 @@ bool PolygonPathPlanner::dijkstra(const std::vector<std::vector<double> > &weigh
         tmp_path.push_back(cur);
         cur = parent[cur];
     }
+
+    qDebug() << "path length:" << tmp_path.size();
 
     int n = tmp_path.size();
     path.resize(n);

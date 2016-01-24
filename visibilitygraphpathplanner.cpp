@@ -34,14 +34,17 @@ bool VisibilityGraphPathPlanner::plan(const QPointF &source, const QPointF &term
     for (uint pg = 0; pg < polygons.size(); ++pg)
     {
         QPolygonF poly = polygons[pg];
-        QPointF p1 = poly[poly.size() - 1];
+//        QPointF p1 = poly[poly.size() - 1];
         int last_i = poly.size() - 1;
         for (int i = 0; i < poly.size(); ++i)
         {
+            QPointF p1 = poly[last_i];
             QPointF p2 = poly[i];
             vertex[first + i] = p2;
             weight[first + i][first + last_i] = weight[first + last_i][first + i] = QLineF(p1, p2).length();
+            scene->addLine(QLineF(p1, p2));
             p1 = p2;
+            last_i = i;
         }
 
         first += poly.size();
@@ -65,8 +68,20 @@ bool VisibilityGraphPathPlanner::plan(const QPointF &source, const QPointF &term
                     break;
                 }
             }
+            for (uint k = 0; k < polygons.size(); ++k)
+            {
+                if (pointInPolygon(ll.p1(), polygons[k]) || pointInPolygon(ll.p2(), polygons[k]))
+                {
+                    intersect = true;
+                    break;
+                }
+            }
+
             if (!intersect)
+            {
                 weight[j][i] = weight[i][j] = ll.length();
+                scene->addLine(QLineF(vertex[i], vertex[j]));
+            }
         }
     }
 
