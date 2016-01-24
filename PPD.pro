@@ -28,7 +28,8 @@ SOURCES +=\
     voronoi/geometry.c \
     voronoi/edgelist.c \
     main.cpp \
-    voronoi/memory.c
+    voronoi/memory.c \
+    rrtpathplanner.cpp
 
 HEADERS  += pathplanningdemonstrator.h \
     map.h \
@@ -39,6 +40,7 @@ HEADERS  += pathplanningdemonstrator.h \
     dijkstrapathplanner.h \
     astarpathplanner.h \
     visibilitygraphpathplanner.h \
-    voronoipathplanner.h
+    voronoipathplanner.h \
+    rrtpathplanner.h
 
 FORMS    += pathplanningdemonstrator.ui
